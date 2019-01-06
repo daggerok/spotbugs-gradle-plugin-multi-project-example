@@ -1,0 +1,46 @@
+allprojects {
+  apply plugin: 'java'
+
+  clean.doFirst {
+    delete "$project.buildDir"
+  }
+}
+
+subprojects {
+//  // one more bug:
+//  // SpotBugs HTML reports not working (generates XML instead)
+//  // when gradle lombok plugin also applied
+//  apply plugin: 'io.franzbecker.gradle-lombok'
+//  lombok.version = project.lombokVersion
+
+  version = project.findProperty('org.gradle.project.version') ?: '1.0.0-SNAPSHOT'
+  group = 'com.github.daggerok'
+  sourceCompatibility = targetCompatibility = "$javaVersion"
+
+  defaultTasks 'clean', 'check'
+
+  dependencies {
+    implementation "org.slf4j:slf4j-api:$slf4jVersion"
+    implementation "ch.qos.logback:logback-classic:$logbackVersion"
+
+    // test
+    testImplementation "junit:junit:$junit4Version"
+    testImplementation "org.assertj:assertj-core:$assertjVersion"
+    testImplementation "org.hamcrest:hamcrest-core:$hamcrestVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:$junitJupiterVersion", {
+      because 'allows JUnit 3 and JUnit 4 tests to run'
+    }
+    testRuntime "org.junit.platform:junit-platform-launcher:$junitPlatformVersion", {
+      because 'allows tests to run from IDEs that bundle older version of launcher'
+    }
+    testCompileOnly 'org.apiguardian:apiguardian-api:1.0.0'
+  }
+
+  test {
+    useJUnitPlatform {
+      includeEngines 'junit-jupiter', 'junit-vintage'
+    }
+  }
+}

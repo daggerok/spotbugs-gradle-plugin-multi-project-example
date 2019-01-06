@@ -1,0 +1,37 @@
+notifications:
+  email: false
+
+git:
+  depth: false
+  quiet: true
+
+language: java
+jdk: oraclejdk8
+node_js: lts/*
+
+addons:
+  apt:
+    packages:
+      - bash
+      - tree
+
+env:
+  global:
+    - TERM=dumb
+
+install: true
+before_install:
+  - sudo apt-get update -yqq
+
+script:
+  - ./gradlew check -PignoreBugs
+  - tree ./build/spotbugs
+  #
+  - ./gradlew clean
+  - ./gradlew check || echo 'error expected.'
+  - tree ./build/spotbugs
+
+cache:
+  packages: true
+  directories:
+    - ${HOME}/.gradle
