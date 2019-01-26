@@ -1,6 +1,6 @@
 buildscript {
   repositories {
-    maven { url "https://plugins.gradle.org/m2/" }
+    maven { url 'https://plugins.gradle.org/m2/' }
   }
   dependencies {
     classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:$spotbugsVersion"
@@ -8,10 +8,10 @@ buildscript {
 }
 
 subprojects {
-  apply plugin: "com.github.spotbugs"
+  apply plugin: 'com.github.spotbugs'
   
   repositories {
-    maven { url "https://plugins.gradle.org/m2/" }
+    maven { url 'https://plugins.gradle.org/m2/' }
   }
   
   def suffix = project.path.replaceAll(':', '-').replaceFirst('-', '')
@@ -19,8 +19,8 @@ subprojects {
   def path = "$prefix/spotbugs/$suffix" // customize reports location
 
   spotbugs {
+    effort = 'max'
     toolVersion = project.toolVersion
-    effort = "max"
     reportsDir = file("$path")
     ignoreFailures = project.findProperty('ignoreBugs') != null // gradle -PignoreBugs ..
   }
@@ -30,14 +30,14 @@ subprojects {
       html {
         enabled = true
         impliesSubProjects = true
-//        // disabled on 1.6.8
-//        destination = "$path/index.html"
+        ////disabled on 1.6.8
+        //destination = "$path/index.html"
       }
       xml {
         enabled = false
       }
     }
-//    pluginClasspath = project.configurations.spotbugsPlugins
+    //pluginClasspath = project.configurations.spotbugsPlugins
   }
 }
 

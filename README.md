@@ -8,13 +8,13 @@ config:
 ```gradle
 buildscript {
   ext {
-    spotbugsVersion = '1.6.8'
-    toolVersion = '3.1.10'
+    spotbugsVersion = '1.6.9'
+    toolVersion = '3.1.11'
   }
 }
 
 plugins { 
-  id 'com.github.spotbugs' version '1.6.8' apply false
+  id 'com.github.spotbugs' version '1.6.9' apply false
 }
 
 apply from: "$rootProject.projectDir/gradle/spotbugs.gradle"
@@ -27,7 +27,7 @@ defaultTasks 'clean', 'check'
 ```gradle
 buildscript {
   repositories {
-    maven { url "https://plugins.gradle.org/m2/" }
+    maven { url 'https://plugins.gradle.org/m2/' }
   }
   dependencies {
     classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:$spotbugsVersion"
@@ -35,15 +35,15 @@ buildscript {
 }
 
 subprojects {
-  apply plugin: "com.github.spotbugs"
+  apply plugin: 'com.github.spotbugs'
 
   repositories {
-    maven { url "https://plugins.gradle.org/m2/" }
+    maven { url 'https://plugins.gradle.org/m2/' }
   }
 
   spotbugs {
+    effort = 'max'
     toolVersion = project.toolVersion
-    effort = "max"
     ignoreFailures = project.findProperty('ignoreBugs') != null
   }
 
@@ -62,9 +62,9 @@ subprojects {
 
 versions:
 
-- gradle: 5.1
-- spotbugs-gradle-plugin: 1.6.8
-- tool: 3.1.10
+- gradle: 5.1.1
+- spotbugs-gradle-plugin: 1.6.9
+- tool: 3.1.11
 
 usage:
 
