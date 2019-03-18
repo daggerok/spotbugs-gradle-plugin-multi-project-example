@@ -22,7 +22,7 @@ plugins {
 //  // one more bug:
 //  // SpotBugs HTML reports not working (generates XML instead)
 //  // when gradle lombok plugin also applied
-//  id 'io.franzbecker.gradle-lombok' version '1.14' apply false
+  id 'io.franzbecker.gradle-lombok' version '1.14' apply false
 }
 
 apply from: "$rootProject.projectDir/gradle/java.gradle"
